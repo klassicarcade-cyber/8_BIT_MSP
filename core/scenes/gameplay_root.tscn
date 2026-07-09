@@ -1,0 +1,178 @@
+[gd_scene load_steps=12 format=3 uid="uid://cop24wllft5wg"]
+
+[ext_resource type="Script" uid="uid://dvwru88v717g3" path="res://core/scenes/gameplay_root.gd" id="1_aur0d"]
+[ext_resource type="Script" uid="uid://rn6qklt0omx1" path="res://core/scenes/press_start.gd" id="3_h3csj"]
+[ext_resource type="PackedScene" uid="uid://ce3vwhhfclfye" path="res://pickup_can_v2.tscn" id="3_xqorp"]
+[ext_resource type="PackedScene" uid="uid://bx112f4ycxsga" path="res://pickup_bottle_v2.tscn" id="4_mat8v"]
+[ext_resource type="PackedScene" uid="uid://cc3brvxv1tuka" path="res://core/ui/game_over_ui.tscn" id="6_10mmd"]
+[ext_resource type="AudioStream" uid="uid://kfnjx1ccb1pw" path="res://audio/sfx/ui/start.wav" id="7_41sjg"]
+[ext_resource type="Script" uid="uid://b6dk84o0bl0rl" path="res://core/scenes/screensaver_overlay.gd" id="8_sbj73"]
+[ext_resource type="Script" uid="uid://b0crgwh1kw4a6" path="res://core/scenes/attract_controller.gd" id="9_pdbjr"]
+[ext_resource type="AudioStream" uid="uid://dm7jsk1g0eqlb" path="res://series/mars/music/mars.ogg" id="17_18g2c"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xqorp"]
+load_path = "res://.godot/imported/bg_gob_downtown.png-e394448e061e04edb96ad2f06570ace5.ctex"
+
+[sub_resource type="SystemFont" id="SystemFont_mat8v"]
+
+[node name="GameplayRoot" type="Node2D"]
+script = ExtResource("1_aur0d")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(960, 540)
+texture = SubResource("CompressedTexture2D_xqorp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 1023
+visibility_layer = 1023
+limit_enabled = false
+
+[node name="pickups" type="Node2D" parent="."]
+
+[node name="Pickup" parent="pickups" instance=ExtResource("3_xqorp")]
+position = Vector2(605, 938)
+
+[node name="Pickup2" parent="pickups" instance=ExtResource("4_mat8v")]
+position = Vector2(352, 931)
+
+[node name="Pickup3" parent="pickups" instance=ExtResource("4_mat8v")]
+position = Vector2(-1, -4)
+
+[node name="Pickup4" parent="pickups" instance=ExtResource("4_mat8v")]
+position = Vector2(-1, -4)
+
+[node name="Pickup5" parent="pickups" instance=ExtResource("3_xqorp")]
+
+[node name="Pickup8" parent="pickups" instance=ExtResource("3_xqorp")]
+
+[node name="UI_Dim" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="DimRoot" type="Control" parent="UI_Dim"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UI_Dim/DimRoot"]
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.086104214, 0.086104214, 0.086104214, 0.86600006)
+
+[node name="UI_Text" type="CanvasLayer" parent="."]
+
+[node name="PressStart" type="Control" parent="UI_Text"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+mouse_filter = 2
+script = ExtResource("3_h3csj")
+gameplay_root_path = NodePath("../..")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI_Text/PressStart"]
+z_index = -10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI_Text/PressStart/CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 96
+text = "PRESS START BUTTON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="UI_Text"]
+offset_left = 100.0
+offset_right = 140.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 70
+
+[node name="TimerLabel" type="Label" parent="UI_Text"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_right = -180.0
+offset_bottom = 81.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.99607843, 0.9882353, 0.99215686, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mat8v")
+theme_override_font_sizes/font_size = 70
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+
+[node name="UI_Overlay" type="CanvasLayer" parent="."]
+
+[node name="GameOverUI" parent="UI_Overlay" instance=ExtResource("6_10mmd")]
+offset_left = 119.0
+offset_top = 2.0
+offset_right = 119.0
+offset_bottom = 2.0
+
+[node name="StartSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_41sjg")
+volume_db = -6.0
+
+[node name="ScreensaverOverlay" type="CanvasLayer" parent="."]
+layer = 200
+script = ExtResource("8_sbj73")
+slides_dir = "res://core/screensavers/"
+slides_prefix = "rules_"
+
+[node name="Root" type="Control" parent="ScreensaverOverlay"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="ScreensaverOverlay/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Slide" type="TextureRect" parent="ScreensaverOverlay/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="AttractController" type="Node" parent="."]
+script = ExtResource("9_pdbjr")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+volume_db = 0.587
+bus = &"Music"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_18g2c")

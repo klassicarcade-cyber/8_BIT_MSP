@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://bcs5515i0swkq"]
+
+[ext_resource type="Texture2D" uid="uid://rcp6lf5piank" path="res://art/sprites/player.png" id="1_wil32"]
+[ext_resource type="AudioStream" uid="uid://cn5i6ynub7q31" path="res://series/gob/sfx/msp_move_fizzy_shuffle.wav" id="2_b46vs"]
+[ext_resource type="Script" uid="uid://divdbrmxamah6" path="res://core/player/msp_voice.gd" id="3_c3esm"]
+[ext_resource type="SpriteFrames" uid="uid://60mo2e7cg40a" path="res://series/fizz/player/fizz_player_frames.tres" id="4_ahvym"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsjgn"]
+size = Vector2(96.00002, 194.00005)
+
+[sub_resource type="Animation" id="Animation_kvwlh"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_u8px6"]
+resource_name = "walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bfu7q"]
+_data = {
+&"idle": SubResource("Animation_kvwlh"),
+&"walk": SubResource("Animation_u8px6")
+}
+
+[node name="Player" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(2.3199968, 0)
+scale = Vector2(1, 1.024)
+texture = ExtResource("1_wil32")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(41, 0.99999976)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_jsjgn")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.95, 0.95)
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+active = false
+libraries = {
+&"": SubResource("AnimationLibrary_bfu7q")
+}
+
+[node name="MoveSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_b46vs")
+volume_db = -12.0
+
+[node name="MSPVoice" type="Node2D" parent="."]
+script = ExtResource("3_c3esm")
+
+[node name="ShoutPlayer" type="AudioStreamPlayer2D" parent="MSPVoice"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(5, -1)
+sprite_frames = ExtResource("4_ahvym")
+animation = &"walk"

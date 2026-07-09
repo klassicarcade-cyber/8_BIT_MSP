@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx1f46gts75jn"]
+
+[ext_resource type="Script" uid="uid://rw38vcxmxm1p" path="res://series/fizz/fizz_pterodactyl.gd" id="1_rtne6"]
+[ext_resource type="PackedScene" uid="uid://wp10u0l8n040" path="res://series/fizz/fizz_red_can.tscn" id="2_68hds"]
+[ext_resource type="Texture2D" uid="uid://chkmsy2ia8urm" path="res://series/fizz/pterodactylo.png" id="3_68hds"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1"]
+radius = 40.0
+height = 80.0
+
+[node name="FizzPterodactyl" type="CharacterBody2D"]
+script = ExtResource("1_rtne6")
+red_can_scene = ExtResource("2_68hds")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("3_68hds")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_1")

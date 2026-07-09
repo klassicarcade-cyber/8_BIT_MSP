@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://coe6xtbcdsgsb"]
+
+[ext_resource type="Script" uid="uid://q8u1jrdbxnln" path="res://series/gob/arcade_sign.gd" id="1_arcsn"]
+
+[node name="ArcadeSign" type="Node2D"]
+script = ExtResource("1_arcsn")

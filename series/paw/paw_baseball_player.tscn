@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://c1jmmyjoameur"]
+
+[ext_resource type="Script" uid="uid://hx4y4a3ma7cw" path="res://series/paw/paw_baseball_player.gd" id="1_pbb01"]
+[ext_resource type="PackedScene" uid="uid://dyufnxfnnnarf" path="res://series/paw/paw_blue_can.tscn" id="2_sk1js"]
+[ext_resource type="Texture2D" uid="uid://csouuxd55buca" path="res://series/paw/baseball_player.png" id="3_sk1js"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1avfg"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(0, 0, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv7pw"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(161, 0, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4qje"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(322, 0, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j2x2"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(0, 260, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e12ht"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(161, 260, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmvnr"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(322, 260, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jm4g"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(0, 520, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2l1o6"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(161, 520, 161, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0b0m"]
+atlas = ExtResource("3_sk1js")
+region = Rect2(322, 520, 161, 260)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c2xf2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1avfg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv7pw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4qje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j2x2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e12ht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmvnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jm4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2l1o6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0b0m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PawBaseballPlayer" type="Node2D"]
+script = ExtResource("1_pbb01")
+stand_y = 860.0
+can_scene = ExtResource("2_sk1js")
+mitt_offset_x = 60.0
+mitt_offset_y = -160.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.3, 1.3)
+sprite_frames = SubResource("SpriteFrames_c2xf2")

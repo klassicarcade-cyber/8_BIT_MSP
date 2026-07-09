@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkjiurrrj0gen"]
+
+[ext_resource type="Script" uid="uid://b0crgwh1kw4a6" path="res://core/scenes/attract_controller.gd" id="1_76cpu"]
+[ext_resource type="Script" uid="uid://cqm282m716tdx" path="res://core/scripts/boot.gd" id="1_or4n7"]
+[ext_resource type="PackedScene" uid="uid://cofbdnmptiuft" path="res://ui/screensavers/ScreensaverOverlay.tscn" id="3_xg3lc"]
+
+[node name="Boot" type="Node"]
+script = ExtResource("1_or4n7")
+
+[node name="AttractController" type="Node" parent="."]
+script = ExtResource("1_76cpu")
+screensaver_scene = ExtResource("3_xg3lc")
+test_force_screensaver_on_start = false

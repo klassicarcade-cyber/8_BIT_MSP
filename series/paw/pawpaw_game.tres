@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="GameDef" load_steps=17 format=3 uid="uid://bliav35imctrn"]
+
+[ext_resource type="Texture2D" uid="uid://cudmj4yy1fndl" path="res://series/paw/pickups/pawpaw_bottle.png" id="1_ndbo6"]
+[ext_resource type="Texture2D" uid="uid://gqeoxk7edyj8" path="res://series/paw/backgrounds/background5.png" id="1_sdaoi"]
+[ext_resource type="PackedScene" uid="uid://bkafq3kw7f64w" path="res://core/player/player.tscn" id="2_vund5"]
+[ext_resource type="Texture2D" uid="uid://be6bsavhi420x" path="res://series/paw/pickups/pawpaw_can.png" id="2_wg3uh"]
+[ext_resource type="Texture2D" uid="uid://68lymp5fk23o" path="res://series/paw/backgrounds/background1.png" id="3_6anby"]
+[ext_resource type="Script" uid="uid://dklyr8k8ip3uq" path="res://core/defs/game_def.gd" id="3_58qgn"]
+[ext_resource type="AudioStream" uid="uid://cotmtjqihqkb6" path="res://series/paw/music/pawpaw.ogg" id="3_74tr7"]
+[ext_resource type="SpriteFrames" uid="uid://btuah6h1fomew" path="res://series/paw/player/pawpaw_game.tres" id="4_wg3uh"]
+[ext_resource type="Texture2D" uid="uid://bfw5e201ri6sr" path="res://series/paw/backgrounds/background2.png" id="5_ndbo6"]
+[ext_resource type="Texture2D" uid="uid://dalgectnr18w8" path="res://series/paw/backgrounds/background3.jpg" id="5_r0dnw"]
+[ext_resource type="Texture2D" uid="uid://dnubhun2d2qkd" path="res://series/paw/backgrounds/background4.png" id="6_p5hqg"]
+[ext_resource type="PackedScene" uid="uid://dqs2ysxm8p7jw" path="res://series/paw/enemies/redwolf/redwolf.tscn" id="9_gqkuh"]
+[ext_resource type="PackedScene" uid="uid://bg0mn1wqj7d2e" path="res://series/paw/enemies/fogger/fogger.tscn" id="9_p5hqg"]
+[ext_resource type="PackedScene" uid="uid://cysjmnoasi5e0" path="res://series/paw/enemies/rocky/rocky.tscn" id="10_ndbo6"]
+[ext_resource type="PackedScene" uid="uid://cje7vmwkhsd8r" path="res://series/paw/enemies/butch/butch.tscn" id="11_wg3uh"]
+[ext_resource type="PackedScene" uid="uid://btmjvg4j51scx" path="res://series/paw/enemies/chickenleg/chickenleg.tscn" id="12_74tr7"]
+
+[resource]
+script = ExtResource("3_58qgn")
+game_id = &"Paw Paw"
+title = "Mr. Soda Pop - Paw PawGobles"
+player_scene = ExtResource("2_vund5")
+music_stream = ExtResource("3_74tr7")
+player_use_sprite_sheet = true
+player_sprite_frames = ExtResource("4_wg3uh")
+room_backgrounds = Array[Texture2D]([ExtResource("3_6anby"), ExtResource("5_ndbo6"), ExtResource("5_r0dnw"), ExtResource("6_p5hqg"), ExtResource("1_sdaoi")])
+room_enemy_scenes = Array[PackedScene]([ExtResource("9_p5hqg"), ExtResource("9_gqkuh"), ExtResource("10_ndbo6"), ExtResource("11_wg3uh"), ExtResource("12_74tr7")])
+bottle_texture = ExtResource("1_ndbo6")
+can_texture = ExtResource("2_wg3uh")
+can_scale = Vector2(1.5, 1.5)
+metadata/_custom_type_script = "uid://dklyr8k8ip3uq"

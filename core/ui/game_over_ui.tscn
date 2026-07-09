@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc3brvxv1tuka"]
+
+[ext_resource type="Script" uid="uid://81rux6ntmk3q" path="res://core/ui/game_over_ui.gd" id="1_q7qke"]
+
+[node name="GameOverUI" type="Control"]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q7qke")
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0, 0, 0, 0.7490196)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 0.707)
+custom_minimum_size = Vector2(1199, 800)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06053035, 0.06053035, 0.060530342, 1)
+
+[node name="Title" type="Label" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 96
+text = "Game Over"
+
+[node name="Sub" type="Label" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="InitialsRow" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="L1" type="Label" parent="InitialsRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+
+[node name="L2" type="Label" parent="InitialsRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+
+[node name="L3" type="Label" parent="InitialsRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+
+[node name="Hint" type="Label" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="Scores" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(60, 20)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 4.0
+offset_right = 10.0
+offset_bottom = 33.0
+theme_override_colors/default_color = Color(0.95596343, 0.9559633, 0.95596343, 1)
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
+theme_override_font_sizes/bold_italics_font_size = 30
+theme_override_font_sizes/italics_font_size = 30
+theme_override_font_sizes/mono_font_size = 30

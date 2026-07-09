@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://mars_spaceship_001"]
+
+[ext_resource type="Script" path="res://series/mars/spaceship_helper/mars_spaceship.gd" id="1_ms001"]
+[ext_resource type="PackedScene" path="res://series/mars/spaceship_helper/mars_gold_can.tscn" id="2_ms001"]
+
+[node name="MarsSpaceship" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ms001")
+gold_can_scene = ExtResource("2_ms001")

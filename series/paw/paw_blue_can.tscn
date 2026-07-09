@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyufnxfnnnarf"]
+
+[ext_resource type="Script" uid="uid://nfcwqkhlcahg" path="res://series/paw/paw_blue_can.gd" id="1_pbc01"]
+[ext_resource type="Texture2D" uid="uid://bp6woklr02vf4" path="res://series/paw/pickups/paw_blue_can.png" id="2_pbc01"]
+
+[node name="PawBlueCan" type="Node2D"]
+script = ExtResource("1_pbc01")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_pbc01")

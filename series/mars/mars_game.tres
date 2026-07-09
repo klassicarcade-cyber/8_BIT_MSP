@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="GameDef" load_steps=18 format=3 uid="uid://cn6gcaapeupub"]
+
+[ext_resource type="Texture2D" uid="uid://kwjwlukpu6ey" path="res://series/mars/backgrounds/background5.png" id="1_emynu"]
+[ext_resource type="Texture2D" uid="uid://b57oqjdldspi" path="res://series/mars/pickups/mar_bottle.png" id="2_oc5rl"]
+[ext_resource type="Texture2D" uid="uid://bor7x8tlfbyno" path="res://series/mars/backgrounds/background1.png" id="3_8k252"]
+[ext_resource type="Texture2D" uid="uid://321eo8efr4mp" path="res://series/mars/pickups/mars_can1.png" id="3_oc5rl"]
+[ext_resource type="Script" uid="uid://dklyr8k8ip3uq" path="res://core/defs/game_def.gd" id="3_pqq74"]
+[ext_resource type="Texture2D" uid="uid://cwp2cxa2kfton" path="res://series/mars/backgrounds/background2.png" id="4_jlsc3"]
+[ext_resource type="AudioStream" uid="uid://dm7jsk1g0eqlb" path="res://series/mars/music/mars.ogg" id="4_ugfqn"]
+[ext_resource type="Texture2D" uid="uid://ext8ctq1v1xu" path="res://series/mars/backgrounds/background3.png" id="5_18qwu"]
+[ext_resource type="Texture2D" uid="uid://dhktmmgugrhak" path="res://core/player/mars/mars_player1.png" id="5_oc5rl"]
+[ext_resource type="SpriteFrames" uid="uid://cl6puesrxu40l" path="res://series/mars/player/mars_player_frames.tres" id="5_rsxix"]
+[ext_resource type="PackedScene" uid="uid://cxif0showospr" path="res://core/player/mars/mars_player.tscn" id="5_ugfqn"]
+[ext_resource type="Texture2D" uid="uid://debq7lemif3c8" path="res://series/mars/backgrounds/background4.png" id="6_3gbk0"]
+[ext_resource type="PackedScene" uid="uid://dq8s8yuq70f5n" path="res://series/mars/enemies/zigglip/zigglip.tscn" id="10_oc5rl"]
+[ext_resource type="PackedScene" uid="uid://b4glleu3tkb1t" path="res://series/mars/enemies/orbbo/orbbo.tscn" id="11_rsxix"]
+[ext_resource type="PackedScene" uid="uid://bcj3kay8xe1ty" path="res://series/mars/enemies/fizzblorp/fizzblorp.tscn" id="12_ugfqn"]
+[ext_resource type="PackedScene" uid="uid://b5jktf2k1hrtw" path="res://series/mars/enemies/globnox/globnox.tscn" id="13_lh80a"]
+[ext_resource type="PackedScene" uid="uid://bduhml3rkq5tt" path="res://series/mars/enemies/glimblob/glimblob.tscn" id="14_g5d1v"]
+
+[resource]
+script = ExtResource("3_pqq74")
+game_id = &"mars"
+title = "Mr. Soda Pop - Mars "
+player_scene = ExtResource("5_ugfqn")
+player_sprite_texture = ExtResource("5_oc5rl")
+music_stream = ExtResource("4_ugfqn")
+player_use_sprite_sheet = true
+player_sprite_frames = ExtResource("5_rsxix")
+background_texture = ExtResource("1_emynu")
+room_backgrounds = Array[Texture2D]([ExtResource("3_8k252"), ExtResource("4_jlsc3"), ExtResource("5_18qwu"), ExtResource("6_3gbk0"), ExtResource("1_emynu")])
+room_enemy_scenes = Array[PackedScene]([ExtResource("10_oc5rl"), ExtResource("11_rsxix"), ExtResource("12_ugfqn"), ExtResource("13_lh80a"), ExtResource("14_g5d1v")])
+bottle_texture = ExtResource("2_oc5rl")
+can_texture = ExtResource("3_oc5rl")
+bottle_scale = Vector2(1.4, 1.4)
+can_scale = Vector2(2, 2)
+metadata/_custom_type_script = "uid://dklyr8k8ip3uq"

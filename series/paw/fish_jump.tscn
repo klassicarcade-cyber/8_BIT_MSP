@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwro1xitdyyhy"]
+
+[ext_resource type="Script" uid="uid://bina18p05jum1" path="res://series/paw/fish_jump.gd" id="1_nbfvp"]
+[ext_resource type="Texture2D" uid="uid://cm048xffjw46w" path="res://series/paw/fish.png" id="2_i1iul"]
+
+[node name="FishJump" type="Node2D"]
+script = ExtResource("1_nbfvp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_i1iul")

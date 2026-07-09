@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce3vwhhfclfye"]
+
+[ext_resource type="Script" uid="uid://wyvee44gclbe" path="res://pickup_can.gd" id="1_wqrv4"]
+[ext_resource type="AudioStream" uid="uid://bw00wthgpvu4p" path="res://audio/sfx/player/player_pickup_can.wav" id="3_ceog7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu7wf"]
+size = Vector2(589.57587, 827.0769)
+
+[node name="Pickup" type="Area2D" groups=["pickup"]]
+collision_layer = 65535
+collision_mask = 65535
+script = ExtResource("1_wqrv4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.038, 0.05)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9.536743e-07, 0)
+scale = Vector2(0.06445312, 0.08463542)
+shape = SubResource("RectangleShape2D_pu7wf")
+
+[node name="CanPickupSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ceog7")
+max_distance = 8000.0
+attenuation = 0.2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

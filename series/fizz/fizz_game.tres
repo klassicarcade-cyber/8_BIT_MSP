@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="GameDef" load_steps=18 format=3 uid="uid://4cwlqstfcwk"]
+
+[ext_resource type="Texture2D" uid="uid://bwmdo04e53ja8" path="res://series/fizz/backgrounds/background5.png" id="1_4iuyk"]
+[ext_resource type="Texture2D" uid="uid://crw8nds8q6s2n" path="res://series/fizz/pickups/fizz_bottle.png" id="2_mvd60"]
+[ext_resource type="PackedScene" uid="uid://bkafq3kw7f64w" path="res://core/player/player.tscn" id="2_xcum4"]
+[ext_resource type="Script" uid="uid://dklyr8k8ip3uq" path="res://core/defs/game_def.gd" id="3_5iu4p"]
+[ext_resource type="Texture2D" uid="uid://dvgx6mwgmotdc" path="res://series/fizz/pickups/fizz_can.png" id="3_4672u"]
+[ext_resource type="Texture2D" uid="uid://cwo6tr3yxbddj" path="res://series/fizz/backgrounds/background1.png" id="3_ftuad"]
+[ext_resource type="Texture2D" uid="uid://cryqryyo4bj18" path="res://series/fizz/backgrounds/background2.png" id="4_f7ltv"]
+[ext_resource type="AudioStream" uid="uid://bmhfuxe6kroe2" path="res://series/fizz/music/fizz.ogg" id="4_xa4ey"]
+[ext_resource type="SpriteFrames" uid="uid://60mo2e7cg40a" path="res://series/fizz/player/fizz_player_frames.tres" id="5_4672u"]
+[ext_resource type="Texture2D" uid="uid://cxyrg5d7w2v84" path="res://series/fizz/backgrounds/background3.png" id="5_l3jwq"]
+[ext_resource type="Texture2D" uid="uid://byqpyhake6xxs" path="res://core/player/fizz/fizz_player1.png" id="5_mvd60"]
+[ext_resource type="Texture2D" uid="uid://bo7ct3drklq1x" path="res://series/fizz/backgrounds/background4.png" id="6_2wdht"]
+[ext_resource type="PackedScene" uid="uid://dsieko0jqxgv5" path="res://series/fizz/enemies/big_t/big_t.tscn" id="8_nujpp"]
+[ext_resource type="PackedScene" uid="uid://bjwqumspislii" path="res://series/fizz/enemies/dino/dino.tscn" id="9_arwlm"]
+[ext_resource type="PackedScene" uid="uid://bnxjpyr3woiy6" path="res://series/fizz/enemies/kite/kite.tscn" id="10_3ymsg"]
+[ext_resource type="PackedScene" uid="uid://dhpyj543b1401" path="res://series/fizz/enemies/spike/spike.tscn" id="11_gcp60"]
+[ext_resource type="PackedScene" uid="uid://3hc5t75eg4x0" path="res://series/fizz/enemies/wooly/wooly.tscn" id="12_ly5yb"]
+
+[resource]
+script = ExtResource("3_5iu4p")
+game_id = &"Fizz"
+title = "Mr. Soda Pop - Fizz"
+player_scene = ExtResource("2_xcum4")
+player_sprite_texture = ExtResource("5_mvd60")
+music_stream = ExtResource("4_xa4ey")
+player_use_sprite_sheet = true
+player_sprite_frames = ExtResource("5_4672u")
+background_texture = ExtResource("1_4iuyk")
+room_backgrounds = Array[Texture2D]([ExtResource("3_ftuad"), ExtResource("4_f7ltv"), ExtResource("5_l3jwq"), ExtResource("6_2wdht"), ExtResource("1_4iuyk")])
+room_enemy_scenes = Array[PackedScene]([ExtResource("8_nujpp"), ExtResource("9_arwlm"), ExtResource("10_3ymsg"), ExtResource("11_gcp60"), ExtResource("12_ly5yb")])
+bottle_texture = ExtResource("2_mvd60")
+can_texture = ExtResource("3_4672u")
+can_scale = Vector2(1.5, 1.5)
+metadata/_custom_type_script = "uid://dklyr8k8ip3uq"

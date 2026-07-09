@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://wp10u0l8n040"]
+
+[ext_resource type="Script" uid="uid://c6580hrf22q74" path="res://series/fizz/fizz_red_can.gd" id="1_frc01"]
+[ext_resource type="Texture2D" uid="uid://rw5qvbchubnh" path="res://series/fizz/pickups/fizz_red_can.png" id="2_frc01"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_frc01"]
+size = Vector2(30, 45)
+
+[node name="FizzRedCan" type="Area2D"]
+z_index = 2
+script = ExtResource("1_frc01")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_frc01")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_frc01")
+hframes = 2
+vframes = 2
+
+[node name="PickupSFX" type="AudioStreamPlayer2D" parent="."]
