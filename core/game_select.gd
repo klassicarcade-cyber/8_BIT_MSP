@@ -20,7 +20,45 @@ const VERSION := "26.7.1"
 
 const SETTINGS_PATH    := "user://operator_settings.cfg"
 const SETTINGS_SECTION := "operator"
-const SETTINGS_KEY_FREE_PLAY := "free_play"
+const SETTINGS_KEY_FREE_PLAY   := "free_play"
+const SETTINGS_KEY_LINEUP_MODE := "lineup_mode"
+
+# -------------------------
+# LINEUP MODES — F2 cycles through these.
+#   ALL_4 shows the normal 2x2 select grid.
+#   Single modes lock the cabinet to one game and show a
+#   full-screen title card instead of the grid.
+# -------------------------
+enum LineupMode { ALL_4, GOBLES_ONLY, PAWPAW_ONLY, MARS_ONLY, FIZZ_ONLY }
+
+const MODE_NAMES: Array[String] = [
+	"ALL 4",
+	"GOBLES ONLY",
+	"PAW PAW ONLY",
+	"MARS ONLY",
+	"FIZZ ONLY",
+]
+
+# Saved-config string ids (stable even if enum order ever changes)
+const MODE_IDS: Array[String] = ["all4", "gobles", "paw_paw", "mars", "fizz"]
+
+# Which grid slot / GameDef each single mode locks to.
+# Index into _slots/_defs: 0=Gobles 1=PawPaw 2=Mars 3=Fizz. -1 = grid mode.
+const MODE_GAME_INDEX: Array[int] = [-1, 0, 1, 2, 3]
+
+# Full-screen title card art for single modes (1920x1080).
+# Drop images in with these names and they appear automatically.
+# Missing image -> falls back to that game's slot art, blown up.
+const TITLE_CARD_BASE_PATHS: Array[String] = [
+	"",  # ALL_4 has no card
+	"res://core/select/title_gobles",
+	"res://core/select/title_paw_paw",
+	"res://core/select/title_mars",
+	"res://core/select/title_fizz",
+]
+const TITLE_CARD_EXTS: Array[String] = [".png", ".webp", ".jpg", ".jpeg"]
+
+var lineup_mode: int = LineupMode.ALL_4
 
 @onready var grid: GridContainer  = $Grid
 @onready var slot_tl: Control     = $Grid/Slot_TL
@@ -33,6 +71,10 @@ const SETTINGS_KEY_FREE_PLAY := "free_play"
 var _slots: Array[Control] = []
 var _defs: Array[String]   = []
 var _selected := 0
+
+# Full-screen title card (created in code, no tscn edits needed)
+var _card_layer: CanvasLayer = null
+var _card_rect: TextureRect  = null
 
 const HIGHLIGHT_COLOR := Color(1.0, 0.9, 0.1, 1.0)
 const DIM_COLOR       := Color(1.0, 1.0, 1.0, 0.70)
@@ -78,10 +120,11 @@ func _ready() -> void:
 	_selected = 0
 	_update_visuals()
 
-	if version_label:
-		version_label.text = "MSP Version " + VERSION
+	_build_title_card()
 
 	_load_settings()
+	_apply_lineup_mode()
+	_update_version_label()
 	_update_mode_label()
 
 	_install_screensaver()
@@ -119,6 +162,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		accept_event()
 		return
 
+	if _is_f2_pressed(event):
+		_cycle_lineup_mode()
+		accept_event()
+		return
+
 	if _is_m_pressed(event):
 		if not free_play:
 			_coins = min(_coins + 1, COINS_NEEDED)
@@ -138,6 +186,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		accept_event()
 		return
 
+	# Grid navigation only makes sense in ALL 4 mode; single modes
+	# have the selection locked to their game.
+	if lineup_mode != LineupMode.ALL_4:
+		return
+
 	if event.is_action_pressed("ui_left"):
 		_move(Vector2i(-1, 0))
 		accept_event()
@@ -152,9 +205,123 @@ func _unhandled_input(event: InputEvent) -> void:
 		accept_event()
 
 
+# -------------------------
+# Lineup mode (F2)
+# -------------------------
+func _cycle_lineup_mode() -> void:
+	lineup_mode = (lineup_mode + 1) % MODE_NAMES.size()
+	_apply_lineup_mode()
+	_save_settings()
+	_update_version_label()
+	print("GameSelect: lineup mode -> ", MODE_NAMES[lineup_mode])
+
+
+func _apply_lineup_mode() -> void:
+	var game_index: int = MODE_GAME_INDEX[lineup_mode]
+
+	if game_index < 0:
+		# ALL 4 — normal grid select
+		grid.visible = true
+		_hide_title_card()
+		_selected = clampi(_selected, 0, _slots.size() - 1)
+		_update_visuals()
+	else:
+		# Single game — lock selection, hide grid, show card
+		_selected = game_index
+		grid.visible = false
+		_show_title_card(lineup_mode)
+
+
+func _build_title_card() -> void:
+	_card_layer = CanvasLayer.new()
+	_card_layer.name  = "TitleCardLayer"
+	_card_layer.layer = 1
+	add_child(_card_layer)
+
+	_card_rect = TextureRect.new()
+	_card_rect.name         = "TitleCard"
+	_card_rect.expand_mode  = TextureRect.EXPAND_IGNORE_SIZE
+	_card_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_card_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_card_layer.add_child(_card_rect)
+
+	# Re-parent the labels onto the card layer so INSERT COIN / version
+	# stay visible on top of the full-screen art in single modes.
+	# (Positions carry over exactly; they draw above layer 0 either way.)
+	if mode_label and mode_label.get_parent() == self:
+		var mp := mode_label.position
+		remove_child(mode_label)
+		_card_layer.add_child(mode_label)
+		mode_label.position = mp
+	if version_label and version_label.get_parent() == self:
+		var vp := version_label.position
+		remove_child(version_label)
+		_card_layer.add_child(version_label)
+		version_label.position = vp
+
+	_card_rect.visible = false
+	_force_card_fullscreen()
+
+
+func _show_title_card(mode: int) -> void:
+	if _card_rect == null:
+		return
+	var tex := _resolve_card_texture(mode)
+	if tex == null:
+		push_warning("GameSelect: no title card OR slot art for mode " + MODE_NAMES[mode])
+		_card_rect.visible = false
+		return
+	_card_rect.texture = tex
+	_card_rect.visible = true
+	_force_card_fullscreen()
+
+
+func _hide_title_card() -> void:
+	if _card_rect:
+		_card_rect.visible = false
+
+
+# Try the dedicated 1920x1080 title card first; if it doesn't exist
+# yet, fall back to the game's select-slot art blown up full screen.
+func _resolve_card_texture(mode: int) -> Texture2D:
+	var base: String = TITLE_CARD_BASE_PATHS[mode]
+	if base != "":
+		for ext in TITLE_CARD_EXTS:
+			var path := base + ext
+			if ResourceLoader.exists(path):
+				var res := load(path)
+				if res is Texture2D:
+					return res
+	# Fallback: slot art
+	var game_index: int = MODE_GAME_INDEX[mode]
+	if game_index >= 0 and game_index < _slots.size():
+		var img := _slots[game_index].get_node_or_null("Image")
+		if img and img is TextureRect:
+			return (img as TextureRect).texture
+	return null
+
+
+func _force_card_fullscreen() -> void:
+	if _card_rect == null:
+		return
+	_card_rect.position = Vector2.ZERO
+	_card_rect.size = get_viewport().get_visible_rect().size
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_SIZE_CHANGED:
+		_force_card_fullscreen()
+
+
+# -------------------------
+# Settings
+# -------------------------
 func _save_settings() -> void:
 	var cfg := ConfigFile.new()
+	# Load first so we never wipe keys other screens may have written.
+	cfg.load(SETTINGS_PATH)
 	cfg.set_value(SETTINGS_SECTION, SETTINGS_KEY_FREE_PLAY, free_play)
+	cfg.set_value(SETTINGS_SECTION, SETTINGS_KEY_LINEUP_MODE, MODE_IDS[lineup_mode])
 	var err := cfg.save(SETTINGS_PATH)
 	if err != OK:
 		push_warning("GameSelect: could not save settings (%d)" % err)
@@ -165,6 +332,14 @@ func _load_settings() -> void:
 	var err := cfg.load(SETTINGS_PATH)
 	if err == OK:
 		free_play = cfg.get_value(SETTINGS_SECTION, SETTINGS_KEY_FREE_PLAY, free_play)
+		var mode_id: String = str(cfg.get_value(SETTINGS_SECTION, SETTINGS_KEY_LINEUP_MODE, MODE_IDS[LineupMode.ALL_4]))
+		var idx := MODE_IDS.find(mode_id)
+		lineup_mode = idx if idx >= 0 else LineupMode.ALL_4
+
+
+func _update_version_label() -> void:
+	if version_label:
+		version_label.text = "MSP Version " + VERSION + "  •  " + MODE_NAMES[lineup_mode]
 
 
 func _update_mode_label() -> void:
@@ -269,6 +444,13 @@ func _is_f1_pressed(event: InputEvent) -> bool:
 		var k := event as InputEventKey
 		return k.pressed and not k.echo and k.physical_keycode == KEY_F1
 	return event.is_action_pressed("toggle_free_play")
+
+
+func _is_f2_pressed(event: InputEvent) -> bool:
+	if event is InputEventKey:
+		var k := event as InputEventKey
+		return k.pressed and not k.echo and k.physical_keycode == KEY_F2
+	return event.is_action_pressed("cycle_lineup_mode")
 
 
 func _is_m_pressed(event: InputEvent) -> bool:
