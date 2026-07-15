@@ -8,14 +8,14 @@ extends CharacterBody2D
 
 # --- CHASE ---
 @export var base_speed: float = 120.0          # starting chase speed
-@export var max_speed: float = 420.0           # top speed at high score
-@export var speed_per_dollar: float = 8.0      # extra speed per $1.00 scored
+@export var max_speed: float = 320.0           # top speed at high score
+@export var speed_per_dollar: float = 4.0      # extra speed per $1.00 scored
 
 # --- TELEPORT ---
-@export var teleport_interval_min: float = 5.0
-@export var teleport_interval_max: float = 10.0
+@export var teleport_interval_min: float = 8.0
+@export var teleport_interval_max: float = 15.0
 @export var teleport_warning_duration: float = 0.6  # flicker before teleport
-@export var teleport_offset: float = 180.0          # how far from player he lands
+@export var teleport_offset: float = 380.0          # how far from player he lands
 
 # --- STEAL ---
 @export var steal_cents: int = 25

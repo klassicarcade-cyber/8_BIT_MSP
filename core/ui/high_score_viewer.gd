@@ -1,3 +1,4 @@
+# res://core/ui/high_score_viewer.gd  (MSP multicart: Gobles / Paw Paw / Mars / Fizz)
 extends Control
 
 const GAME_SELECT_SCENE := "res://core/game_select.tscn"
@@ -8,6 +9,14 @@ const AUTO_CYCLE_SECONDS := 5.0
 const FADE_SECONDS := 0.35
 
 const RESET_HOLD_SECONDS := 1.0
+
+# Maximum rows shown on the review screen. Matches the 10-place
+# entry screen. The save file may contain more; we only show these.
+const MAX_DISPLAY_ROWS := 10
+
+# Extra vertical padding (total, top + bottom) added around the score
+# text when auto-sizing the panel. Bump this if the panel feels tight.
+const PANEL_VERTICAL_PADDING := 80.0
 
 const PAGE_GAME_IDS: Array[String] = ["gobles", "paw_paw", "mars", "fizz"]
 const PAGE_TITLES: Array[String] = [
@@ -38,6 +47,11 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_idle_time = 0.0
 	_cycle_time = 0.0
+	# Let the RichTextLabel grow to fit its text instead of clipping,
+	# and disable the scrollbar so long lists never show a scroll UI.
+	if scores_box:
+		scores_box.fit_content = true
+		scores_box.scroll_active = false
 	_update_help_text()
 	_show_page(_page)
 	_set_fade_alpha(1.0)
@@ -147,13 +161,41 @@ func _show_page(page_index: int) -> void:
 	var scores: Array = _load_scores_for_game(game_id)
 	if scores.is_empty():
 		scores_box.append_text("[center]NO SCORES YET[/center]")
+		call_deferred("_fit_panel_to_content")
 		return
-	for i in range(scores.size()):
+	var row_count: int = mini(scores.size(), MAX_DISPLAY_ROWS)
+	for i in range(row_count):
 		var entry: Dictionary = scores[i]
 		var initials: String = str(entry.get("initials", entry.get("name", "MSP")))
 		var cents: int = int(entry.get("cents", entry.get("score", 0)))
 		var line: String = "[center]%2d.  %s   %s[/center]\n" % [i + 1, initials, _format_dollars(cents)]
 		scores_box.append_text(line)
+	# Resize the panel AFTER the RichTextLabel has laid out its text.
+	call_deferred("_fit_panel_to_content")
+
+
+# Resizes ScoresPanel vertically so ALL rows fit (no more clipping at
+# 7 entries), then re-centers it on screen. Horizontal position and
+# width are left exactly as set in the editor. Runs deferred so the
+# RichTextLabel has finished laying out its content first.
+func _fit_panel_to_content() -> void:
+	if scores_box == null:
+		return
+	var panel := scores_panel as Control
+	if panel == null:
+		return
+	var content_h: float = float(scores_box.get_content_height())
+	if content_h <= 0.0:
+		return
+	var new_h: float = content_h + PANEL_VERTICAL_PADDING
+	var viewport_h: float = get_viewport_rect().size.y
+	# Never grow past the viewport (leave a little breathing room).
+	new_h = minf(new_h, viewport_h - 40.0)
+	var panel_x: float = panel.position.x
+	var panel_w: float = panel.size.x
+	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	panel.position = Vector2(panel_x, (viewport_h - new_h) * 0.5)
+	panel.size = Vector2(panel_w, new_h)
 
 
 func _load_scores_for_game(game_id: String) -> Array:
