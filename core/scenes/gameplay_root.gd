@@ -1,3 +1,4 @@
+# res://gameplay_root.gd
 extends Node2D
 
 const WORLD_SIZE: Vector2 = Vector2(1920.0, 1080.0)
@@ -79,6 +80,16 @@ var time_bonus_index: int = 0
 var waiting_for_start: bool = true
 var game_over_triggered: bool = false
 var _world_frozen: bool = true
+
+# -------------------------
+# ATTRACT IDLE TIMEOUT — press-start screen returns to game select
+# -------------------------
+# If a game is selected but nobody presses Start within this many
+# seconds, the cabinet returns to the game select screen, which runs
+# its own idle/screensaver cycle like normal.
+const ATTRACT_IDLE_SECONDS: float = 45.0
+var _attract_idle_time: float = 0.0
+var _attract_idle_fired: bool = false
 
 # -------------------------
 # HIGH SCORE RESET (hidden cabinet button)
@@ -238,8 +249,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if game_over and game_over_ui and game_over_ui.visible:
 		return
 
-	if waiting_for_start and event.is_action_pressed("ui_accept"):
-		_start_round()
+	if waiting_for_start:
+		# Any input on the press-start screen resets the idle clock.
+		_attract_idle_time = 0.0
+
+		if event.is_action_pressed("ui_accept"):
+			_start_round()
 
 
 func _process(delta: float) -> void:
@@ -249,6 +264,9 @@ func _process(delta: float) -> void:
 			_reset_holding = false
 			_reset_hold_time = 0.0
 			_reset_highscores_now()
+
+	if waiting_for_start and not game_over:
+		_tick_attract_idle(delta)
 
 	if waiting_for_start or game_over:
 		return
@@ -263,6 +281,26 @@ func _process(delta: float) -> void:
 	_tick_mars_robot_timer(delta)
 	_tick_beer_crate_timer(delta)
 	_update_timer_ui()
+
+
+# ==================================================
+# ATTRACT IDLE TIMEOUT
+# ==================================================
+func _tick_attract_idle(delta: float) -> void:
+	if _attract_idle_fired:
+		return
+
+	_attract_idle_time += delta
+	if _attract_idle_time >= ATTRACT_IDLE_SECONDS:
+		_attract_idle_fired = true
+		var path := _resolve_game_select_path()
+		if path != "" and ResourceLoader.exists(path):
+			print("💤 Press-start idle for ", ATTRACT_IDLE_SECONDS, "s — back to game select")
+			call_deferred("_go_to_game_select", path)
+		else:
+			push_error("GameplayRoot: idle timeout — could not resolve game select path.")
+			_attract_idle_time = 0.0
+			_attract_idle_fired = false
 
 
 func _reset_highscores_now() -> void:
@@ -320,6 +358,9 @@ func _enter_attract_mode() -> void:
 	game_over = false
 	game_over_triggered = false
 	_world_frozen = true
+
+	_attract_idle_time = 0.0
+	_attract_idle_fired = false
 
 	var mp := _get_music_player()
 	if mp and mp.playing:
