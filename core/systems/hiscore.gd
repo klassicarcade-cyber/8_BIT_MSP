@@ -1,3 +1,4 @@
+# res://core/systems/hiscore.gd
 extends Node
 
 const MAX_SCORES := 10
@@ -159,3 +160,6 @@ func reset_highscores_blank() -> void:
 	scores.clear()
 	save_scores()
 	print("✅ High scores CLEARED for file:", _save_path)
+	# Immediately upload empty scores so online monthly clears right away
+	if has_node("/root/ScoreUploader"):
+		get_node("/root/ScoreUploader").upload_all_games_including_empty()
