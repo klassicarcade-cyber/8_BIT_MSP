@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="MSP_VERSION_26.7.1"
+config/name="MSP_1982"
 run/main_scene="uid://65ki01i246lq"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"

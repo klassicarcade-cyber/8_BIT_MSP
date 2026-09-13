@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="GameDef" load_steps=17 format=3 uid="uid://ckvtvvqvig5hc"]
 
 [ext_resource type="Script" uid="uid://dklyr8k8ip3uq" path="res://core/defs/game_def.gd" id="1_3a8xt"]
-[ext_resource type="Texture2D" uid="uid://cspoxol236446" path="res://art/backgrounds/bg_gob_downtown.png" id="1_nmlpk"]
+[ext_resource type="Texture2D" uid="uid://cspoxol236446" path="res://series/gob/backgrounds/bg_gob_downtown.png" id="1_nmlpk"]
 [ext_resource type="Texture2D" uid="uid://c70jfnptsjf1k" path="res://art/pickups/gobles_bottle.png" id="2_b4ir5"]
 [ext_resource type="PackedScene" uid="uid://bkafq3kw7f64w" path="res://core/player/player.tscn" id="2_ntau6"]
 [ext_resource type="Texture2D" uid="uid://djoyhoag5ab8m" path="res://art/pickups/gobles_can.png" id="3_lr1uv"]
@@ -10,12 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://ce87ox7oj5g6k" path="res://core/enemies/buzz/buzz.tscn" id="7_lc24s"]
 [ext_resource type="Texture2D" uid="uid://b4y0nene8ipth" path="res://art/backgrounds/bg_gob_ka.png" id="7_n67uy"]
 [ext_resource type="PackedScene" uid="uid://bccc7o2njoprq" path="res://core/enemies/louie/louie.tscn" id="7_nd11e"]
-[ext_resource type="Texture2D" uid="uid://dajr8eas3gxhp" path="res://art/backgrounds/bg_gob_playground.png" id="8_hs1n7"]
+[ext_resource type="Texture2D" uid="uid://dajr8eas3gxhp" path="res://series/gob/backgrounds/bg_gob_playground.png" id="8_hs1n7"]
 [ext_resource type="PackedScene" uid="uid://d12a5xd8kcolp" path="res://core/enemies/lady/lady.tscn" id="8_nd11e"]
-[ext_resource type="Texture2D" uid="uid://kkyxi7w2y5cy" path="res://art/backgrounds/bg_gob_simple.png" id="9_4gep2"]
+[ext_resource type="Texture2D" uid="uid://kkyxi7w2y5cy" path="res://series/gob/backgrounds/bg_gob_simple.png" id="9_4gep2"]
 [ext_resource type="PackedScene" uid="uid://uk3hdf4nfbhl" path="res://core/enemies/fizz/fizz.tscn" id="9_315i2"]
 [ext_resource type="PackedScene" uid="uid://dsj7vg8ms1m3x" path="res://core/enemies/fang/fang.tscn" id="10_rw4hd"]
-[ext_resource type="Texture2D" uid="uid://j74kvx1toykv" path="res://art/backgrounds/bg_gob_bowling.png" id="10_swpv7"]
+[ext_resource type="Texture2D" uid="uid://j74kvx1toykv" path="res://series/gob/backgrounds/bg_gob_bowling.png" id="10_swpv7"]
 
 [resource]
 script = ExtResource("1_3a8xt")

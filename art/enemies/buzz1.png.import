@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cksqi2i43iwt4"
-path="res://.godot/imported/idle_msp.png-ca930430f867d2d246390094c9915d11.ctex"
+uid="uid://eehawcmvr235"
+path="res://.godot/imported/buzz1.png-71515902c5ace319a7a2543ab7affd77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://series/gob/player/idle_msp.png"
-dest_files=["res://.godot/imported/idle_msp.png-ca930430f867d2d246390094c9915d11.ctex"]
+source_file="res://art/enemies/buzz1.png"
+dest_files=["res://.godot/imported/buzz1.png-71515902c5ace319a7a2543ab7affd77.ctex"]
 
 [params]
 

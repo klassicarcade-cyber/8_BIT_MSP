@@ -1225,3 +1225,4 @@ func _spawn_paw_baseball() -> void:
 	player.name = "PawBaseballPlayerHelper"
 	add_child(player)
 	print("⚾ Paw Paw Baseball Player launched at $28.20!")
+	

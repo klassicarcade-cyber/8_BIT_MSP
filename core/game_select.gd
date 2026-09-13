@@ -14,7 +14,7 @@ const GAMEPLAY_SCENE         := "res://core/scenes/gameplay_root.tscn"
 const HIGHSCORE_VIEWER_SCENE := "res://core/ui/high_score_viewer.tscn"
 const SCREENSAVER_META_KEY   := "show_screensaver_on_ready"
 
-const VERSION := "26.8.1"
+const VERSION := "26.9.1"
 
 @export var free_play: bool = false
 
@@ -339,7 +339,7 @@ func _load_settings() -> void:
 
 func _update_version_label() -> void:
 	if version_label:
-		version_label.text = "MSP Version " + VERSION + "  •  " + MODE_NAMES[lineup_mode]
+		version_label.text = "MSP 1982 Version " + VERSION + "  •  " + MODE_NAMES[lineup_mode]
 
 
 func _update_mode_label() -> void:

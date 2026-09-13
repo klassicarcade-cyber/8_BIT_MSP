@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkafq3kw7f64w"]
+[gd_scene load_steps=9 format=3 uid="uid://bkafq3kw7f64w"]
 
 [ext_resource type="Script" uid="uid://dfgfap0ufrvxd" path="res://player.gd" id="1_4flbx"]
-[ext_resource type="Texture2D" uid="uid://rcp6lf5piank" path="res://art/sprites/player.png" id="2_ll17t"]
 [ext_resource type="AudioStream" uid="uid://cn5i6ynub7q31" path="res://series/gob/sfx/msp_move_fizzy_shuffle.wav" id="3_ll17t"]
 [ext_resource type="Script" uid="uid://divdbrmxamah6" path="res://core/player/msp_voice.gd" id="4_qjudb"]
-[ext_resource type="SpriteFrames" uid="uid://drr4nb8l01oxp" path="res://core/player/player.tres" id="5_xttum"]
+[ext_resource type="SpriteFrames" uid="uid://pnhg04pw56oh" path="res://series/gob/player/gob_player_frames.tres" id="5_xttum"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(138.00003, 250.00003)
@@ -29,7 +28,6 @@ script = ExtResource("1_4flbx")
 visible = false
 position = Vector2(2.3199968, 0)
 scale = Vector2(1, 1.024)
-texture = ExtResource("2_ll17t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(37.999996, -19.999989)
@@ -60,4 +58,4 @@ script = ExtResource("4_qjudb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("5_xttum")
-animation = &"walk"
+animation = &"idle"
