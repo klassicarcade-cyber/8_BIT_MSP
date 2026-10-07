@@ -14,7 +14,7 @@ const GAMEPLAY_SCENE         := "res://core/scenes/gameplay_root.tscn"
 const HIGHSCORE_VIEWER_SCENE := "res://core/ui/high_score_viewer.tscn"
 const SCREENSAVER_META_KEY   := "show_screensaver_on_ready"
 
-const VERSION := "26.9.1"
+const VERSION := "26.10.1a"
 
 @export var free_play: bool = false
 
