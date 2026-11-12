@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var value_cents: int = 10
+@export var value_cents: int = 190
 @export var respawn_seconds: float = 1.0
 
 # Keep pickups from spawning partly off-screen
